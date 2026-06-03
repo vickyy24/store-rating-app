@@ -88,7 +88,7 @@ async function changePassword(req, res){
         const [result] = await con.query("SELECT * FROM users WHERE user_id=?", [decoded.UserId]);
 
         if(result.length == 0){
-            res.status(404).send({message: "Invalid Email"});
+            res.status(404).send({message: "Invalid user"});
         }
         else{
 
@@ -114,4 +114,23 @@ async function changePassword(req, res){
 
 }
 
-module.exports = { signup,login, changePassword };
+async function logout(req, res){
+
+    try{
+
+        res.clearCookie("tokenn", {
+            httpOnly: true,
+            sameSite: "lax",
+            secure: false
+        });
+
+        res.status(200).send({message: "Logout Successful"});
+
+    }
+    catch(error){
+        res.status(500).send({message: error.message});
+    }
+
+}
+
+module.exports = { signup, login, changePassword, logout };
