@@ -59,7 +59,10 @@ async function login(req, res){
                     maxAge: 30 * 24 * 60 * 60 * 1000
                 });
 
-                res.status(200).send({message: "Login Successful"});
+                res.status(200).send({
+                    message: "Login Successful",
+                    Role: result[0].role
+                });
             }
 
         }
@@ -114,6 +117,29 @@ async function changePassword(req, res){
 
 }
 
+async function verifyUser(req, res){
+
+    const Token = req.cookies.tokenn;
+
+    if(!Token){
+        return res.status(401).send({message: "Unauthorized"});
+    }
+
+    try{
+
+        const decoded = jwt.verify(Token,process.env.JWT_SECRET);
+
+        res.status(200).send({
+            Role: decoded.Role
+        });
+
+    }
+    catch(error){
+        res.status(401).send({message: "Unauthorized"});
+    }
+
+}
+
 async function logout(req, res){
 
     try{
@@ -133,4 +159,4 @@ async function logout(req, res){
 
 }
 
-module.exports = { signup, login, changePassword, logout };
+module.exports = { signup, login, changePassword, verifyUser, logout };

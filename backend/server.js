@@ -2,20 +2,24 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-const { signup, login, changePassword, logout  } = require("./controllers/authController");
+const { signup, login, changePassword, verifyUser, logout  } = require("./controllers/authController");
 const { addUser, addStore , getDashboardCounts, getAdminUsers, getNormalUsers, getStoreData } = require("./Controllers/adminController");
 const { getAllStores, submitRating, updateRating } = require("./controllers/userController");
 const { getStoreRatingsUsers, getStoreAverageRating } = require("./controllers/storeOwnerController");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: true,
+    credentials: true
+}));
 app.use(express.json());
 app.use(cookieParser());
 
 app.post("/signup", signup);
 app.post("/login", login);
 app.post("/change-password", changePassword);
+app.get("/verify-user", verifyUser);
 app.get("/logout", logout);
 
 app.post("/add-user", addUser);
