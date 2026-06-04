@@ -195,7 +195,6 @@ async function getStoreData(req, res){
             GROUP BY s.store_id, s.user_id, s.store_name, u.name, u.email, u.address
         `);
 
-        
         res.status(200).send(result);
 
     }
@@ -204,4 +203,5 @@ async function getStoreData(req, res){
     }
 
 }
+
 module.exports = { addUser, addStore, getDashboardCounts, getAdminUsers, getNormalUsers, getStoreData };
