@@ -1,4 +1,5 @@
-import { FaStore } from "react-icons/fa";
+import { FaStore, FaUserCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
     return (
@@ -22,9 +23,13 @@ const Navbar = () => {
 
             </div>
 
-            <div className="text-sm text-[#64748b]">
-                Store Rating Platform
-            </div>
+            <Link to="/profile" className="flex items-center gap-2 px-3 py-2 rounded-full border border-[#e5e7eb] hover:bg-[#f8fafc] transition-all">
+               <FaUserCircle className="text-lg text-[#081534]" />
+
+                <span className="text-sm font-medium text-[#081534]">
+                    My Profile
+                </span>
+            </Link>
 
         </div>
     );

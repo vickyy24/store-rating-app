@@ -335,7 +335,7 @@ const Login = () => {
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute right-4 top-1/2 -translate-y-1/2"
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
                                     >
                                         {showPassword ? (
                                             <IoEyeOffOutline className="text-[20px] text-[#64748b]" />
@@ -382,7 +382,7 @@ const Login = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full h-13 mt-6 rounded-xl bg-[#ff7b5c] text-white font-semibold text-[18px]"
+                                className="w-full h-13 mt-6 rounded-xl bg-[#ff7b5c] text-white font-semibold text-[18px] cursor-pointer"
                             >
                                 {loading ? "Logging In..." : "Login"}
                             </button>
