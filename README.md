@@ -125,22 +125,34 @@ Normal Users can:
 Store Owners can:
 
 * View Average Store Rating
+
 * View Users Who Rated Their Store
 
   * Name
   * Email
   * Rating
+
 * Sort Data
 
   * Name
   * Email
   * Rating
+
 * Change Password
+
 * Logout
 
 ---
 
 ## Database Schema
+
+### Create Database
+
+```sql
+CREATE DATABASE store_rating;
+
+USE store_rating;
+```
 
 ### Users Table
 
@@ -228,7 +240,7 @@ Store Owners can:
 ### Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/vickyy24/store-rating-app.git
 ```
 
 ### Backend Setup
@@ -247,6 +259,26 @@ node server.js
 cd frontend
 
 npm install
+
+npm run dev
+```
+
+### Run Application
+
+Open two terminals.
+
+**Terminal 1**
+
+```bash
+cd backend
+
+node server.js
+```
+
+**Terminal 2**
+
+```bash
+cd frontend
 
 npm run dev
 ```
