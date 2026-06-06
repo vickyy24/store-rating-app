@@ -53,72 +53,54 @@ const AddUser = () => {
         setPasswordError("");
         setRoleError("");
 
-        const emailRegex =
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const nameRegex = /^(?=.{20,60}$)(?=.*[A-Za-z])[A-Za-z]+(?:[ '-][A-Za-z]+)*(?:\s+[A-Za-z]+(?:[ '-][A-Za-z]+)*)+$/;
 
-        const passwordRegex =
-            /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,16}$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const addressRegex = /^(?=.{10,400}$)(?=.*[A-Za-z])[A-Za-z0-9\s,.'#\/()-]+$/;
+
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,16}$/;
 
         if (!name.trim()) {
-
             setNameError("Name is required");
             isValid = false;
-
         }
-        else if (name.length < 20 || name.length > 60) {
-
-            setNameError("Name must be between 20 and 60 characters");
+        else if (!nameRegex.test(name.trim())) {
+            setNameError("Name must be 20-60 characters and contain valid words only");
             isValid = false;
-
         }
 
         if (!email.trim()) {
-
             setEmailError("Email is required");
             isValid = false;
 
         }
         else if (!emailRegex.test(email)) {
-
             setEmailError("Enter a valid email address");
             isValid = false;
-
         }
 
         if (!address.trim()) {
-
             setAddressError("Address is required");
             isValid = false;
-
         }
-        else if (address.length > 400) {
-
-            setAddressError("Address cannot exceed 400 characters");
+        else if (!addressRegex.test(address.trim())) {
+            setAddressError("Enter a valid address");
             isValid = false;
-
         }
 
         if (!password.trim()) {
-
             setPasswordError("Password is required");
             isValid = false;
-
         }
         else if (!passwordRegex.test(password)) {
-
-            setPasswordError(
-                "Password must be 8-16 characters with at least one uppercase letter and one special character"
-            );
-
+            setPasswordError("Password must be 8-16 characters with at least one uppercase letter and one special character");
             isValid = false;
-
         }
 
         if (!role) {
-
             setRoleError("Please select a role");
             isValid = false;
-
         }
 
         return isValid;
@@ -164,18 +146,10 @@ const AddUser = () => {
         })
         .catch((error) => {
 
-            if (
-                error.response &&
-                error.response.status === 409
-            ) {
-
-                setEmailError(
-                    error.response.data.message
-                );
-
+            if (error.response && error.response.status === 409) {
+                setEmailError(error.response.data.message);
             }
             else {
-
                 setNotification({
                     show: true,
                     type: "error",
@@ -186,9 +160,7 @@ const AddUser = () => {
 
         })
         .finally(() => {
-
             setLoading(false);
-
         });
 
     };
@@ -213,10 +185,8 @@ const AddUser = () => {
             <div className="w-full max-w-md">
 
                 <div className="mb-8">
-
                     <h1 className="text-3xl font-bold text-[#081534]">Add User</h1>
                     <p className="text-[#64748b] mt-2"> Create Admin, Store Owner or Normal User accounts.</p>
-
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4" >
@@ -228,7 +198,7 @@ const AddUser = () => {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             placeholder="Enter Full Name"
-                            className="w-full h-10 border border-[#e2e8f0] rounded-xl px-4 outline-none"
+                            className="w-full h-10 border border-[#e2e8f0] rounded-xl px-4 outline-none focus:border-gray-500"
                         />
 
                         {nameError && (
@@ -248,7 +218,7 @@ const AddUser = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="Enter Email Address"
-                            className="w-full h-10 border border-[#e2e8f0] rounded-xl px-4 outline-none"
+                            className="w-full h-10 border border-[#e2e8f0] rounded-xl px-4 outline-none focus:border-gray-500"
                         />
 
                         {emailError && (
@@ -268,7 +238,7 @@ const AddUser = () => {
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
                             placeholder="Enter Address"
-                            className="w-full border border-[#e2e8f0] rounded-xl px-4 py-3 resize-none outline-none"
+                            className="w-full border border-[#e2e8f0] rounded-xl px-4 resize-none outline-none focus:border-gray-500"
                         />
 
                         {addressError && (
@@ -289,7 +259,7 @@ const AddUser = () => {
                             autoComplete="new-password"
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Enter Password"
-                            className="w-full h-10 border border-[#e2e8f0] rounded-xl px-4 outline-none"
+                            className="w-full h-10 border border-[#e2e8f0] rounded-xl px-4 outline-none focus:border-gray-500"
                         />
 
                         {passwordError && (
@@ -304,42 +274,26 @@ const AddUser = () => {
 
                         <label className="block font-semibold text-[#081534] mb-1">Role</label>
 
-                        <select
-                            value={role}
-                            onChange={(e) => setRole(e.target.value)}
-                            className="w-full h-10 border border-[#e2e8f0] rounded-xl px-4 outline-none"
+                        <select value={role} onChange={(e) => setRole(e.target.value)}
+                            className="w-full h-10 border border-[#e2e8f0] rounded-xl px-4 outline-none focus:border-gray-500"
                         >
-                            <option value="">
-                                Select Role
-                            </option>
+                            <option value=""> Select Role</option>
 
-                            <option value="Admin">
-                                Admin
-                            </option>
+                            <option value="Admin"> Admin</option>
 
-                            <option value="Normal User">
-                                Normal User
-                            </option>
+                            <option value="Normal User">  Normal User</option>
 
-                            <option value="Store Owner">
-                                Store Owner
-                            </option>
+                            <option value="Store Owner"> Store Owner</option>
 
                         </select>
 
                         {roleError && (
-                            <p className="text-red-500 text-xs mt-1">
-                                {roleError}
-                            </p>
+                            <p className="text-red-500 text-xs mt-1">{roleError}</p>
                         )}
 
                     </div>
 
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full h-10 rounded-xl bg-[#ff7b5c] text-white font-semibold"
-                    >
+                    <button type="submit" disabled={loading} className="w-full h-10 rounded-xl bg-[#ff7b5c] text-white font-semibold">
                         {loading ? "Adding..." : "Add User"}
                     </button>
 

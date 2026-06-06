@@ -15,26 +15,6 @@ const AdminDashboard = () => {
     useEffect(() => {
 
         axios({
-            url: "http://localhost:9000/verify-user",
-            method: "GET",
-            withCredentials: true
-        })
-        .then((response) => {
-
-            if(response.data.Role !== "Admin"){
-                navigate("/");
-            }
-
-        })
-        .catch(() => {
-            navigate("/");
-        });
-
-    }, []);
-
-    useEffect(() => {
-
-        axios({
             url: "http://localhost:9000/dashboard-counts",
             method: "GET",
             withCredentials: true

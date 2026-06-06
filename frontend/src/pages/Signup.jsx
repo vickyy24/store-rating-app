@@ -67,78 +67,54 @@ const Signup = () => {
         setPasswordError("");
         setConfirmPasswordError("");
 
-        const emailRegex =
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        const passwordRegex =
-            /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,16}$/;
+        const nameRegex = /^(?=.{20,60}$)(?=.*[A-Za-z])[A-Za-z\s.'-]+$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const addressRegex = /^(?=.{1,400}$)(?=.*[A-Za-z])[A-Za-z0-9\s,.'#\/()-]+$/;
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,16}$/;
 
         if (!name.trim()) {
-
             setNameError("Name is required");
             isValid = false;
-
         }
-        else if (name.length < 20 || name.length > 60) {
-
-            setNameError("Name must be between 20 and 60 characters");
+        else if (!nameRegex.test(name.trim())) {
+            setNameError("Name must be 20-60 characters and contain valid characters only");
             isValid = false;
-
         }
 
         if (!email.trim()) {
-
             setEmailError("Email is required");
             isValid = false;
-
         }
         else if (!emailRegex.test(email)) {
-
             setEmailError("Enter a valid email address");
             isValid = false;
-
         }
 
         if (!address.trim()) {
-
             setAddressError("Address is required");
             isValid = false;
-
         }
-        else if (address.length > 400) {
-
-            setAddressError("Address cannot exceed 400 characters");
+        else if (!addressRegex.test(address.trim())) {
+            setAddressError("Address must be 1-400 characters and contain at least one letter");
             isValid = false;
-
         }
 
         if (!password.trim()) {
-
             setPasswordError("Password is required");
             isValid = false;
-
         }
         else if (!passwordRegex.test(password)) {
-
-            setPasswordError(
-                "Password must be 8-16 characters with at least one uppercase letter and one special character"
-            );
-
+            setPasswordError("Password must be 8-16 characters with at least one uppercase letter and one special character");
             isValid = false;
-
         }
 
         if (!confirmPassword.trim()) {
-
             setConfirmPasswordError("Confirm Password is required");
             isValid = false;
-
         }
         else if (password !== confirmPassword) {
-
             setConfirmPasswordError("Passwords do not match");
             isValid = false;
-
         }
 
         return isValid;
@@ -295,17 +271,11 @@ const Signup = () => {
 
                         </div>
 
-                        <form
-                            onSubmit={handleSignup}
-                            className="mt-3"
-                        >
+                        <form onSubmit={handleSignup} className="mt-3">
 
                             <div>
 
-                                <label
-                                    htmlFor="name"
-                                    className="block font-semibold text-[#081534]"
-                                >
+                                <label htmlFor="name" className="block font-semibold text-[#081534]">
                                     Name
                                 </label>
 
@@ -326,9 +296,7 @@ const Signup = () => {
                                 </div>
 
                                 {nameError && (
-                                    <p className="text-red-500 text-xs">
-                                        {nameError}
-                                    </p>
+                                    <p className="text-red-500 text-xs"> {nameError}</p>
                                 )}
 
                             </div>

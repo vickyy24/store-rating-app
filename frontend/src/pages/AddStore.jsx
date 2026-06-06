@@ -21,23 +21,19 @@ const AddStore = () => {
 
     useEffect(() => {
 
-    axios({
-        url: "http://localhost:9000/store-owners",
-        method: "GET",
-        withCredentials: true
-    })
-    .then((response) => {
+        axios({
+            url: "http://localhost:9000/store-owners",
+            method: "GET",
+            withCredentials: true
+        })
+        .then((response) => {
+            setStoreOwners(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 
-        setStoreOwners(response.data);
-
-    })
-    .catch((error) => {
-
-        console.log(error);
-
-    });
-
-}, []);
+    }, []);
 
     useEffect(() => {
 
@@ -74,21 +70,16 @@ const AddStore = () => {
 
         }
 
+        const storeNameRegex = /^(?=.*[A-Za-z])[A-Za-z0-9\s&().,'-]{3,255}$/;
         if (!storeName.trim()) {
 
             setStoreNameError("Store Name is required");
-
             isValid = false;
 
         }
-        else if (
-            storeName.trim().length < 3 ||
-            storeName.trim().length > 255
-        ) {
+        else if (!storeNameRegex.test(storeName.trim())) {
 
-            setStoreNameError(
-                "Store Name must be between 3 and 255 characters"
-            );
+            setStoreNameError("Store Name must be 3-255 characters and contain only valid characters");
 
             isValid = false;
 
@@ -112,10 +103,7 @@ const AddStore = () => {
             url: "http://localhost:9000/add-store",
             method: "POST",
             withCredentials: true,
-            data: {
-                UserId: storeOwner,
-                StoreName: storeName
-            }
+            data: { UserId: storeOwner, StoreName: storeName}
         })
         .then((response) => {
 
@@ -134,9 +122,7 @@ const AddStore = () => {
             setNotification({
                 show: true,
                 type: "error",
-                message:
-                    error.response?.data?.message ||
-                    "Something went wrong"
+                message: error.response?.data?.message || "Something went wrong"
             });
 
         })
@@ -177,7 +163,7 @@ const AddStore = () => {
 
                         <label className="block font-semibold text-[#081534] mb-1">Store Owner</label>
 
-                        <select value={storeOwner} onChange={(e) =>setStoreOwner(e.target.value)} className="w-full h-10 border border-[#e2e8f0] rounded-xl px-4 outline-none">
+                        <select value={storeOwner} onChange={(e) =>setStoreOwner(e.target.value)} className="w-full h-10 border border-[#e2e8f0] rounded-xl px-4 outline-none focus:border-gray-500">
 
                             <option value="">  Select Store Owner</option>
                             {storeOwners.map((owner) => (
@@ -191,11 +177,9 @@ const AddStore = () => {
                         </select>
 
                         {storeOwnerError && (
-
                             <p className="text-red-500 text-xs mt-1">
                                 {storeOwnerError}
                             </p>
-
                         )}
 
                     </div>
@@ -203,32 +187,17 @@ const AddStore = () => {
                     <div>
 
                         <label className="block font-semibold text-[#081534] mb-1">Store Name</label>
-
-                        <input
-                            type="text"
-                            value={storeName}
-                            onChange={(e) =>
-                                setStoreName(e.target.value)
-                            }
-                            placeholder="Enter Store Name"
-                            className="w-full h-10 border border-[#e2e8f0] rounded-xl px-4 outline-none"
+                        <input type="text" value={storeName} onChange={(e) => setStoreName(e.target.value)} placeholder="Enter Store Name"
+                            className="w-full h-10 border border-[#e2e8f0] rounded-xl px-4 outline-none focus:border-gray-500"
                         />
 
                         {storeNameError && (
-
-                            <p className="text-red-500 text-xs mt-1">
-                                {storeNameError}
-                            </p>
-
+                            <p className="text-red-500 text-xs mt-1">{storeNameError}</p>
                         )}
 
                     </div>
 
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full h-10 rounded-xl bg-[#ff7b5c] text-white font-semibold"
-                    >
+                    <button type="submit" disabled={loading} className="w-full h-10 rounded-xl bg-[#ff7b5c] text-white font-semibold">
                         {loading ? "Adding..." : "Add Store"}
                     </button>
 

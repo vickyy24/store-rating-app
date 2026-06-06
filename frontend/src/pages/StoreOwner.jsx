@@ -2,13 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import {
-    FaStar,
-    FaSignOutAlt,
-    FaSort,
-    FaSortUp,
-    FaSortDown
-} from "react-icons/fa";
+import { FaStar, FaSignOutAlt, FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 
 const StoreOwner = () => {
 
@@ -21,30 +15,6 @@ const StoreOwner = () => {
     const [sortField, setSortField] = useState("");
 
     const [sortOrder, setSortOrder] = useState("asc");
-
-    useEffect(() => {
-
-        axios({
-            url: "http://localhost:9000/verify-user",
-            method: "GET",
-            withCredentials: true
-        })
-        .then((response) => {
-
-            if (response.data.Role !== "Store Owner") {
-
-                navigate("/");
-
-            }
-
-        })
-        .catch(() => {
-
-            navigate("/");
-
-        });
-
-    }, []);
 
     useEffect(() => {
 

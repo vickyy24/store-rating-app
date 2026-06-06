@@ -17,31 +17,9 @@ const Admin = () => {
 
     const [activeTab, setActiveTab] = useState("dashboard");
 
-    useEffect(() => {
-
-        axios({
-            url: "http://localhost:9000/verify-user",
-            method: "GET",
-            withCredentials: true,
-        })
-        .then((response) => {
-
-            if (response.data.Role !== "Admin") {
-                navigate("/");
-            }
-
-        })
-        .catch(() => {
-            navigate("/");
-        });
-
-    }, []);
-
     const menuClass = (tab) =>
         `flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
-            activeTab === tab
-                ? "bg-[#ff7b5c] text-white"
-                : "text-white hover:bg-[#16325f]"
+            activeTab === tab ? "bg-[#ff7b5c] text-white" : "text-white hover:bg-[#16325f]"
         }`;
 
     return (
@@ -58,56 +36,32 @@ const Admin = () => {
 
                     <div className="flex flex-col gap-2">
 
-                        <Link
-                            to="#"
-                            onClick={() => setActiveTab("dashboard")}
-                            className={menuClass("dashboard")}
-                        >
+                        <Link to="#" onClick={() => setActiveTab("dashboard")} className={menuClass("dashboard")}>
                             <FaChartPie />
                             Dashboard
                         </Link>
 
-                        <Link
-                            to="#"
-                            onClick={() => setActiveTab("add-user")}
-                            className={menuClass("add-user")}
-                        >
+                        <Link to="#" onClick={() => setActiveTab("add-user")} className={menuClass("add-user")}>
                             <FaUserPlus />
                             Add User
                         </Link>
 
-                        <Link
-                            to="#"
-                            onClick={() => setActiveTab("add-store")}
-                            className={menuClass("add-store")}
-                        >
+                        <Link to="#" onClick={() => setActiveTab("add-store")} className={menuClass("add-store")}>
                             <FaStore />
                             Add Store
                         </Link>
 
-                        <Link
-                            to="#"
-                            onClick={() => setActiveTab("stores")}
-                            className={menuClass("stores")}
-                        >
+                        <Link to="#" onClick={() => setActiveTab("stores")} className={menuClass("stores")}>
                             <FaStore />
                             Stores
                         </Link>
 
-                        <Link
-                            to="#"
-                            onClick={() => setActiveTab("admin-users")}
-                            className={menuClass("admin-users")}
-                        >
+                        <Link to="#" onClick={() => setActiveTab("admin-users")} className={menuClass("admin-users")}>
                             <FaUsers />
                             Admin/Normal Users
                         </Link>
 
-                        <Link
-                            to="#"
-                            onClick={() => setActiveTab("all-users")}
-                            className={menuClass("all-users")}
-                        >
+                        <Link to="#" onClick={() => setActiveTab("all-users")} className={menuClass("all-users")}>
                             <FaUsers />
                             All Users
                         </Link>

@@ -9,6 +9,7 @@ import Admin from "./pages/Admin";
 import User from "./pages/User";
 import StoreOwner from "./pages/StoreOwner";
 import Profile from "./pages/Profile";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
     return (
@@ -24,22 +25,38 @@ const App = () => {
 
                     <Route
                         path="/admin"
-                        element={<Admin />}
+                        element={
+                            <ProtectedRoute>
+                                <Admin />
+                            </ProtectedRoute>
+                        }
                     />
 
                     <Route
                         path="/normal-user"
-                        element={<User />}
+                        element={
+                            <ProtectedRoute>
+                                <User />
+                            </ProtectedRoute>
+                        }
                     />
 
                     <Route
                         path="/store-owner"
-                        element={<StoreOwner />}
+                        element={
+                            <ProtectedRoute>
+                                <StoreOwner />
+                            </ProtectedRoute>
+                        }
                     />
 
                     <Route
                         path="/profile"
-                        element={<Profile />}
+                        element={
+                            <ProtectedRoute>
+                                <Profile />
+                            </ProtectedRoute>
+                        }
                     />
 
                 </Route>
